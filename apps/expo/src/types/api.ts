@@ -63,6 +63,13 @@ export type AccountResponse = z.infer<typeof accountSchema>;
 // POST: /account/activate
 export const activateAccountSchema = z.object({
   authorization_token: z.string(),
+  buildings: z.array(
+    z.object({
+      latitude: z.number(),
+      longtitude: z.number(),
+      tz_name: z.string(),
+    })
+  ),
 });
 
 export type ActivateAccountResponse = z.infer<typeof activateAccountSchema>;

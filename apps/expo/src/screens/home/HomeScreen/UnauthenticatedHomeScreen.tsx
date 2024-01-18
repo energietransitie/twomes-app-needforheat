@@ -1,15 +1,25 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Button, makeStyles, Text } from "@rneui/themed";
-import { Image } from "react-native";
+import { Image, TextInput, View } from "react-native";
+import Modal from 'react-native-modal';
 
 import Box from "@/components/elements/Box";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { HomeStackParamList } from "@/types/navigation";
+import { useEffect, useState } from "react";
+import { use } from "i18next";
+import useGpsLocation from "@/hooks/useGpsLocation";
+
 
 export default function UnauthenticatedHomeScreen() {
   const { t } = useTranslation();
   const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
   const styles = useStyles();
+  const { requestLocationPermissions, showInputs } = useGpsLocation();
+  const [postcode, setPostcode] = useState('');
+  const [houseNumber, setHouseNumber] = useState('');
+  const [additionHouseNumber, setadditionHouseNumber] = useState('');
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   function onInvitedPress() {
     navigation.navigate("AlreadyInvitedScreen");
@@ -28,7 +38,7 @@ export default function UnauthenticatedHomeScreen() {
       <Button fullWidth onPress={onInvitedPress}>
         {t("screens.home_stack.home.unauthenticated.already_invited")}
       </Button>
-    </Box>
+    </Box >
   );
 }
 
@@ -65,5 +75,44 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: theme.spacing.xl,
+  },
+  modalTitle: {
+    fontFamily: "RobotoBold",
+    fontSize: 20,
+    marginBottom: theme.spacing.md,
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: theme.spacing.md,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+  },
+  modalSubtitle: {
+    fontSize: 14,
+    marginBottom: theme.spacing.md,
+    textAlign: "center",
+  },
+  input: {
+    height: 40,
+    borderBottomWidth: 1,
+    marginBottom: theme.spacing.md,
+    paddingHorizontal: theme.spacing.sm,
+    width: "100%",
+  },
+  buttonContainer: {
+    flexDirection: "row", marginTop: 16, width: "100%", justifyContent: 'center', alignItems: 'center'
+  },
+  cancelButton: {
+    marginRight: 8,
+    marginBottom: theme.spacing.md,
+    fontSize: 18,
+    flex: 1,
+  },
+  submitButton: {
+    marginLeft: 8,
+    marginBottom: theme.spacing.md,
+    fontSize: 18,
+    flex: 1,
   },
 }));

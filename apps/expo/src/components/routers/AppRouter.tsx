@@ -2,6 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useTheme } from "@rneui/themed";
 import { useContext } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 import HomeRouter from "./HomeRouter";
 import InfoRouter from "./InfoRouter";
@@ -21,30 +22,26 @@ export default function AppRouter() {
   const { isAuthed } = useContext(UserContext);
 
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false, tabBarActiveTintColor: theme.colors.primary }}>
+    <Tab.Navigator screenOptions={{ headerShown: false, tabBarActiveTintColor: theme.colors.primary, tabBarStyle: {}, }}>
       <Tab.Screen
         name="Home"
         component={HomeRouter}
-        options={{
+        options={({ route }) => ({
           title: t("screens.home_stack.title"),
           tabBarIcon: ({ color, size }) => {
             return <Ionicons name="list-outline" size={size} color={color} />;
           },
-        }}
+          tabBarStyle: ((route) => {
+            const routeName = getFocusedRouteNameFromRoute(route) ?? "HomeScreen";
+            if (routeName === "ShareLocationScreen") {
+              return { display: "none" };
+            }
+            return {};
+          })(route),
+        })}
       />
       {isAuthed ? (
         <>
-          {/* <Tab.Screen
-            name="DeviceOverview"
-            component={DeviceOverviewScreen}
-            options={{
-              title: t("screens.device_overview.title"),
-              headerShown: true,
-              tabBarIcon: ({ color, size }) => {
-                return <Ionicons name="list-outline" size={size} color={color} />;
-              },
-            }}
-          /> */}
           <Tab.Screen
             name="Measurements"
             component={MeasurementsScreen}

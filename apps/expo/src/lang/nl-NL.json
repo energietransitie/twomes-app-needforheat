@@ -143,6 +143,13 @@
           "unknown_error": "Er is een fout opgetreden tijdens het scannen van de QR-code."
         }
       },
+      "share_location": {
+        "title": "Share Location",
+        "description": "Please share your location with the app to continue.",
+        "errors": {
+          "no_permission": "No location permission"
+        }
+      },
       "search_device": {
         "title": "Apparaat zoeken",
         "errors": {

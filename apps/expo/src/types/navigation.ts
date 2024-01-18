@@ -15,6 +15,7 @@ export type HomeStackParamList = {
   QrScannerScreen: { expectedDeviceName: string } | undefined;
   AddDeviceScreen: { qrData: SensorQrCode };
   AddOnlineDataSourceScreen: undefined;
+  ShareLocationScreen: undefined;
   SearchDeviceScreen: { deviceName: string; proofOfPossession: string; device_TypeName: any };
   ActivateDeviceScreen: { qrData: SensorQrCode };
   ConnectScreen: { device: BleDeviceType; proofOfPossession: string; device_TypeName: any };

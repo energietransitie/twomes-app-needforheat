@@ -1,7 +1,7 @@
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Text, useTheme, Button } from "@rneui/themed";
-import { useCallback, useContext, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
@@ -16,6 +16,7 @@ import useTranslation from "@/hooks/translation/useTranslation";
 import { UserContext } from "@/providers/UserProvider";
 import { RootStackParamList } from "@/types/navigation";
 import { useFocusEffect } from "@react-navigation/native";
+import useGpsLocation from "@/hooks/useGpsLocation";
 
 type DeviceOverviewScreenProps = NativeStackScreenProps<RootStackParamList, "DeviceOverview">;
 
@@ -29,6 +30,21 @@ export default function DeviceOverviewScreen() {
   const [buildingId, setBuildingId] = useState<number | undefined>(buildings[0]?.id);
   const [refreshDeviceList, setRefreshDeviceList] = useState(false);
   const hasMultipleBuildings = buildings.length > 1;
+  const { gpsLocation, timeZone, requestLocationPermissions, locationObtained } = useGpsLocation();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await requestLocationPermissions();
+
+      const latitude = gpsLocation?.lat;
+      const longitude = gpsLocation?.lng;
+      const tz_name = timeZone;
+
+      console.log(latitude + " test " + longitude + tz_name);
+    };
+
+    fetchData();
+  }, []);
 
   useFocusEffect(
     useCallback(() => {

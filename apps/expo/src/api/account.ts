@@ -5,14 +5,18 @@ import { activateAccountSchema, cloudFeedSchema } from "@/types/api";
 import { getJwtPayload } from "@/utils/jwt";
 import { handleRequestErrors } from "@/utils/tools";
 
-export async function activateAccount(accountToken: string) {
+export async function activateAccount(accountToken: string, latitude?: number, longtitude?: number, tz_name?: string) {
   const response = await fetch(`${API_URL}/account/activate`, {
     headers: {
       ...BASE_FETCH_HEADERS,
       Authorization: `Bearer ${accountToken}`,
     },
     method: "POST",
-    body: JSON.stringify({}),
+    body: JSON.stringify({
+      latitude: latitude,
+      longtitude: longtitude,
+      tz_name: tz_name,
+    }),
   });
 
   const data = await handleRequestErrors(response);

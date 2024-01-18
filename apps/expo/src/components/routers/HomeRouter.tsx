@@ -15,6 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import { HeaderBackButton } from '@react-navigation/elements'
 import { Platform } from "react-native";
 import AddOnlineDataSourceScreen from "@/screens/home/AddOnlineDataSourceScreen";
+import ShareLocationScreen from "@/screens/home/ShareLocationScreen";
 
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
@@ -28,7 +29,7 @@ export default function HomeRouter() {
   const navigation = useNavigation();
 
   return (
-    <HomeStack.Navigator initialRouteName="HomeScreen">
+    <HomeStack.Navigator initialRouteName="HomeScreen" >
       <HomeStack.Screen
         name="HomeScreen"
         options={{ title: t("screens.device_overview.title") }}
@@ -103,6 +104,14 @@ export default function HomeRouter() {
           title: t("screens.home_stack.provision.enelogic"),
         }}
         component={AddOnlineDataSourceScreen}
+      />
+      <HomeStack.Screen
+        name="ShareLocationScreen"
+        options={{
+          title: t("screens.home_stack.share_location.title"),
+          ...disableNavigation,
+        }}
+        component={ShareLocationScreen}
       />
     </HomeStack.Navigator>
   );

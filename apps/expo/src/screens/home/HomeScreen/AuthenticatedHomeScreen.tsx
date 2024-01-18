@@ -5,12 +5,16 @@ import { Image } from "react-native";
 import Box from "@/components/elements/Box";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { HomeStackParamList } from "@/types/navigation";
+import useGpsLocation from "@/hooks/useGpsLocation";
 
 export default function AuthenticatedHomeScreen() {
   const { t } = useTranslation();
   const { theme } = useTheme();
   const styles = useStyles();
   const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
+  const { location, timeZone } = useGpsLocation();
+
+  console.log(location?.lat);
 
   /**
    * Navigate to QrScannerScreen
